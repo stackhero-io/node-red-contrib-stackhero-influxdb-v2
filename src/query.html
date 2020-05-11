@@ -1,0 +1,99 @@
+<script type="text/html" data-template-name="Stackhero-InfluxDB-v2-query">
+  <div class="form-row">
+    <label for="node-input-server"><i class="fa fa-database"></i> Database</label>
+    <input type="text" id="node-input-server">
+  </div>
+  <div class="form-row">
+    <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+    <input type="text" id="node-input-name" placeholder="Name">
+  </div>
+</script>
+
+<!-- See https://nodered.org/docs/creating-nodes/help-style-guide -->
+<script type="text/html" data-help-name="Stackhero-InfluxDB-v2-query">
+  <p>Query an InfluxDB-v2 database.</p>
+
+
+  <h3>Inputs</h3>
+  <dl class="message-properties">
+    <dt>
+      topic <span class="property-type">string</span>
+    </dt>
+    <dd> the Flux query.</dd>
+  </dl>
+
+
+  <h3>Outputs</h3>
+  <dl class="message-properties">
+    <dt>payload <span class="property-type">array</span></dt>
+    <dd>the results of the Flux query.</dd>
+  </dl>
+
+
+  <h3>Example</h3>
+
+  <p>
+    A simple query:
+    <pre>
+msg.topic = 'from(bucket: "myBucket") |> range(start: -1h)';
+return msg;
+    </pre>
+  </p>
+
+  <p>
+    A complex query with multiple lines:
+    <pre>
+msg.topic = [
+  'from(bucket: "myBucket")',
+  '  |> range(start: -1d, stop: now)',
+  '  |> filter(fn: (r) => r._measurement == "machinerySensor")',
+  '  |> filter(fn: (r) => r._field == "vibrations")',
+  '  |> aggregateWindow(every: 1h, fn: mean)',
+  '  |> yield(name: "mean")',
+
+  'from(bucket: "myBucket")',
+  '  |> range(start: -1d, stop: now)',
+  '  |> filter(fn: (r) => r._measurement == "machinerySensor")',
+  '  |> filter(fn: (r) => r._field == "vibrations")',
+  '  |> aggregateWindow(every: 1h, fn: max)',
+  '  |> yield(name: "max")',
+].join('\n');
+
+return msg;
+    </pre>
+  </p>
+
+  <h3>References</h3>
+  <ul>
+    <li><a href="https://github.com/stackhero-io/node-red-contrib-stackhero-influxdb-v2">Repository</a> - the nodes repository</li>
+    <li><a href="https://www.stackhero.io/services/InfluxDB-v2">InfluxDB-v2</a> - Managed InfluxDB-v2 database</li>
+    <li><a href="https://www.stackhero.io/services/Node-RED">Node-RED</a> - Managed Node-RED service</li>
+    <li><a href="https://www.stackhero.io/services/Grafana">Grafana</a> - Managed Grafana database</li>
+  </ul>
+</script>
+
+<script type="text/javascript">
+  RED.nodes.registerType('Stackhero-InfluxDB-v2-query', {
+    category: 'storage-input',
+    color: '#C0DEED', // See https://nodered.org/docs/creating-nodes/appearance#background-colour
+    defaults: {
+      server: {
+        type: 'Stackhero-InfluxDB-v2-Server',
+        required: true
+      },
+      name: {
+        value: ''
+      }
+    },
+    inputs: 1, // Number of input
+    outputs: 1, // Number of outputs
+    icon: 'db.png', // See https://nodered.org/docs/creating-nodes/appearance#icon
+    // Note: label (and probably labelStyle) have to be a classical function (not an arrow function)
+    label: function () {
+      return this.name || 'Stackhero InfluxDB-v2 QUERY';
+    },
+    labelStyle: function () {
+      return this.name ? 'node_label_italic' : ''
+    }
+  });
+</script>

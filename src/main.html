@@ -1,0 +1,80 @@
+<script type="text/html" data-template-name="Stackhero-InfluxDB-v2-Server">
+  <div class="form-row">
+    <label for="node-config-input-host"><i class="fa fa-globe"></i> Host</label>
+    <input type="text" id="node-config-input-host" placeholder="xxxxxx.stackhero-network.com">
+  </div>
+  <div class="form-row">
+    <label for="node-config-input-port"><i class="fa fa-random"></i> Port</label>
+    <input type="text" id="node-config-input-port">
+  </div>
+  <div class="form-row">
+    <label for="node-config-input-tls"><i class="fa fa-shield"></i> TLS</label>
+    <input type="checkbox" id="node-config-input-tls" style="display:inline-block; width:auto; vertical-align:top;">
+    <label for="node-config-input-tls" style="width:auto !important;"> Encrypt connection to database</label>
+  </div>
+  <div class="form-row">
+    <label for="node-config-input-token"><i class="fa fa-key"></i> Token</label>
+    <input type="text" id="node-config-input-token">
+  </div>
+  <div class="form-row">
+    <label for="node-config-input-organization"><i class="fa fa-building"></i> Organization</label>
+    <input type="password" id="node-config-input-organization">
+  </div>
+  <div class="form-row">
+    <label for="node-config-input-bucket"><i class="fa fa-archive"></i> Default bucket</label>
+    <input type="text" id="node-config-input-bucket">
+  </div>
+  <div class="form-row">
+    <label for="node-config-input-name"><i class="fa fa-tag"></i> Name</label>
+    <input type="text" id="node-config-input-name" placeholder="Name">
+  </div>
+</script>
+
+<script type="text/javascript">
+  RED.nodes.registerType('Stackhero-InfluxDB-v2-Server', {
+    category: 'config',
+    defaults: {
+      name: {
+        value: ""
+      },
+      host: {
+        value: "xxxxxx.stackhero-network.com",
+        required: true
+      },
+      port: {
+        value: "443",
+        required: true
+      },
+      tls: {
+        value: true,
+        required: true
+      }
+    },
+    credentials: {
+      token: {
+        type: "text",
+        required: true
+      },
+      organization: {
+        type: "text",
+        required: true
+      },
+      bucket: {
+        type: "text",
+        required: false
+      }
+    },
+    // Note: label (and probably labelStyle) have to be a classical function (not an arrow function)
+    label: function () {
+      return this.name || this.host
+    }
+  });
+</script>
+
+<!-- See https://nodered.org/docs/creating-nodes/help-style-guide -->
+<script type="text/html" data-help-name="Stackhero-InfluxDB-v2-Server">
+  <p>
+    Add the credentials for accessing your database here.<br />
+    You can find your credentials on Stackhero by choosing your InfluxDB-v2 service and then clicking on the "Configure" button.
+  </p>
+</script>
