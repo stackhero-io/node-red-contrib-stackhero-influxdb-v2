@@ -34,7 +34,8 @@ msg.payload = {
   //        `ms` (milliseconds),
   //        `s` (seconds).
   // The default is `ns`
-  precision: 'ns',
+  // Note: if you set the `timestamp` field to `Date.now()`, you have to set the `precision` to `ms`
+  precision: 'ms',
 
   // Data to send to InfluxDB
   // Can be an array of objects or only one object
