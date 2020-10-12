@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 1.0.3 (2020-10-12)
+
+- 🌟 Add support of strings in fields values
+
+
 ## 1.0.2 (2020-05-12)
 
 - 👩‍⚖️ Add license informations
