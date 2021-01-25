@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 1.0.4 (2021-01-25)
+
+- 🌟 Update influxdb-v2 to 1.0.0, escaping special characters in measurement, tags and fields (see https://docs.influxdata.com/influxdb/v2.0/reference/syntax/line-protocol/#special-characters)
+
+
 ## 1.0.3 (2020-10-12)
 
 - 🌟 Add support of strings in fields values
