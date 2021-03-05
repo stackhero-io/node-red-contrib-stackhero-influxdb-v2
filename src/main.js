@@ -2,6 +2,7 @@ module.exports = (RED) => {
   'use strict';
 
   const Influxdb = require('influxdb-v2');
+  const https = require('https');
 
   function InfluxDbV2Node(config) {
     RED.nodes.createNode(this, config);
@@ -11,7 +12,12 @@ module.exports = (RED) => {
         host: config.host,
         port: config.port,
         protocol: config.tls ? 'https' : 'http',
-        token: this.credentials.token
+        token: this.credentials.token,
+        fetchOptions: {
+          agent: new https.Agent({
+            rejectUnauthorized: !config.selfsigned
+          })
+        }
       });
     };
 
