@@ -25,6 +25,7 @@ module.exports = (RED) => {
       }
     };
 
+    this.serverConfig.setMaxListeners(this.serverConfig.getMaxListeners() + 1);
     this.serverConfig.on('stateWrite', (code, info) => this.setState(code, info));
 
     this.on('input', async msg => {
